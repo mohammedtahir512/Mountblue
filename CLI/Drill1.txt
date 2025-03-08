@@ -1,0 +1,61 @@
+# Practice Drill 1
+1) mkdir → to create Directories
+   ->mkdir -p hello/five/six/seven hello/one/two/three/four 
+    note: p → Creates parent directories if they do not exist.
+    
+2) creating files
+touch → command is used to create empty file
+touch hello/five/six/c.txt
+cd hello/five/six/seven
+touch error.log
+cd ../../../../one
+touch a.txt b.txt
+cd two
+touch d.txt
+cd three
+mkdir four
+cd four
+touch access.log
+    
+3)Tree diagram of folders and files
+    
+hello
+├── five
+│   └── six
+│       ├── c.txt
+│       └── seven
+│           └── error.log
+└── one
+    ├── a.txt
+    ├── b.txt
+    └── two
+        ├── d.txt
+        └── three
+            ├── e.txt
+            └── four
+                └── access.log
+
+4)Delete all the files having the .log extension
+ ->find hello -type f -name ‘*.log’ -delete 
+    This command finds all files with the ".log" extension in the hello directory by specifying -type f (for files), then deletes them.
+
+5)Add the following content to a.txt
+    way 1->nano hello/one/a.txt
+    (this will overwrite previous content)
+    
+    way 2->cat >> hello/one/a.txt 
+    (this will not overwrite the existing content in the file). 
+    
+
+6)Delete the directory named five
+  ->rm -r hello/five
+   note1: rmdir → to delete empty directory
+   note2: m -R or -r → it is used to delete recursively if the directory is not empty
+    
+ 7)Rename the one directory to uno
+ ->mv hello/one hello/uno 
+  
+  ->mv hello/uno/a.txt hello/two 
+   
+  note: mv → to rename or move file from source to target directory 
+

@@ -1,0 +1,151 @@
+1- Downloading "Harry Potter and the Goblet of fire”
+  [ wget -O Harrypotter.txt [https://raw.githubusercontent.com/bobdeng/owlreader/master/ERead/assets/books/Harry Potter and the Goblet of Fire.txt]        (https://raw.githubusercontent.com/bobdeng/owlreader/master/ERead/assets/books/Harry%20Potter%20and%20the%20Goblet%20of%20Fire.txt) ]
+
+  -O → i used it for custom name
+
+2- top 3 lines
+  [ head -3 Harrypotter.txt ]
+  head → it is used to show or display content from top 
+  -3 → shows the first 3 lines from the top
+  You can also use -n to specify the number of lines
+
+3- bottom 10 lines
+  [ tail -10  Harrypotter.txt ]
+  tail → it is used to show or display content of bottom 
+  -10 → shows the 10 lines from the bottom
+  You can also use -n to specify the number of lines
+
+4- find following word occur in a book 
+  for Harry → [ grep -ow Harry harrypotter.txt | wc -l ]
+  for Ron→ [ grep -ow Ron harrypotter.txt | wc -l ]
+  for Hermione→ [ grep -ow Hermione harrypotter.txt | wc -l ]
+  for Dumbledore→ [ grep -ow Dumbledore harrypotter.txt | wc -l ]
+
+  wc -l → is for count lines  
+  -ow → ensures whole-word matches ****only but prints & counts each match separately.
+  grep -w → can miss multiple matches on the same line.
+  -o → does not match substrings , it just outputs each match separately.
+
+  if we want like harry to be match in substring the we do only -o to print matched word in seperate line.
+
+5- to print lines from 100 to 200
+
+  [ head -200 Harrypotter.txt | tail -100 ]
+
+  here we first extract the first 100 lines then bottom 100 lines .
+  if we do wc -l  it’ll show 100
+
+6- unique words
+  [ grep -o -E '\w+' Harrypotter.txt | sort -uf | wc -l ]
+  grep -o → to output only according to regex
+  -E → for extended regular expresion like we want only words
+  sort -uf → u removes duplicates and f means ignore case sensitive
+
+---------------------------------------------------------------------------------------------------------------
+# Process & Ports
+
+1- browsers pid ,ppid 
+  [  ps -eo pid,ppid,cmd | grep -E 'chrome|firefox|brave|edge’  ]
+  ps → displays processes
+  -ef → lists all system processes.
+  -eo →  lists only **specific fields** (PID, PPID, and CMD) but does not include all processes
+  we can also use pgrep
+
+2- killing process
+  ps -e | grep -i discord
+  5115 ?        00:02:00 Discord
+  5119 ?        00:00:00 Discord
+  
+  kill 5115
+  kill → to close process by pid etc
+  pkill → to kill process gracefully
+
+3- top 3 process by cpu usage
+  [ ps -eo pid,ppid,%cpu --sort=-%cpu | head -4 ]
+  -eo → all with only pid ppid and cpuusage then sort it to decending order by -%cpu then showing only 3 process using head
+
+4- top 3 process by memory usage
+  [ ps -eo pid,ppid,%mem --sort=-%mem | head -4 ]
+  -eo → all with only pid ppid and memory usage then sort it to decending order by -%mem then showing only 3 process using head
+
+5- server in python
+  [ python3 -m http.server 8000 ]
+  by using python3 version we are creating a server using a built in python module http server on port 8000 from present directory
+  -m → runs module as a script
+
+6- stop the server from another tab 
+  first search the process  
+  [  ps -eo pid,ppid,cmd | grep -i python  ] OR [ ps -ef |grep -i python ]
+  
+  33081    3912 python3 -m http.server 8000
+  33479   33288 grep --color=auto -i python
+  
+  kill 33081
+
+7- server with port 90
+  [ sudo python3 -m http.server 90 ]
+  We are using sudo because ports under 1024 are privileged due to security concerns
+
+8- all tcp udp active connections
+
+  [ ss -tua ]
+
+  ss →  sockets statistics (latest command) / netstat → older network status
+  -t → tcp
+  -u → udp
+  -a → all active and listening connections
+  -p → also display process id
+
+9- find pid of process listening to port 5432
+  if we dont have any listening port on 5432 we have create a process then we can find the pid
+
+  eg.- [  python3 -m http.server 5432 ] created a server listening on port 5432
+
+  now to find it 
+
+  [ ss -tunlp | grep :5432 ]
+
+  tcp   LISTEN 0      5            0.0.0.0:5432       0.0.0.0:*    users:(("python3",pid=10844,fd=3))
+
+-------------------------------------------------------------------------------------------------------
+
+# Managing Software
+
+1- to install 
+  package managers 
+  ubuntu → apt-get install
+  [ sudo apt-get install vscode ] nodejs etc …
+  i use nala pakage manager
+  [ sudo nala install vim ] , nginx , htop
+
+2- to unistall
+  [ sudo nala unistall nginx ]
+
+-------------------------------------------------------------------------------------------------------
+
+# Misc
+
+1- ip 
+  we can use these following commands
+  [ ip a | grep inet ] 
+  ip a → shows all network interface and there ip
+  grep inet → our ip  
+  [ hostname -i ] works same
+  [ ip address show ]
+
+2- ip address of [google.com](http://google.com)
+  [ nslookp google.com ]
+  or 
+  [ host google.com ]
+  or 
+  [ ping google.com ]
+
+3- to check internet is working
+  we can ping [google.com](http://google.com) 
+  ip a will also work
+  nslookup google.com
+
+4- find where is node command
+  [ whereis node ] → Shows all locations
+  [ which node ] → used to find the exact command that runs when you type it **d**oes not show multiple locations, just the first match.
+  for code also same commands
