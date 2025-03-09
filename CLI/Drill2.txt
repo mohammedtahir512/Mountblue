@@ -3,7 +3,11 @@ Drill 2
 File Management
 
 1)Download File
-->wget "Harrypotter.txt "https://raw.githubusercontent.com/bobdeng/owlreader/master/ERead/assets/books/Harry%20Potter%20and%20the%20Goblet%20of%20Fire.txt"
+way1-> To download only
+wget "Harrypotter.txt "https://raw.githubusercontent.com/bobdeng/owlreader/master/ERead/assets/books/Harry%20Potter%20and%20the%20Goblet%20of%20Fire.txt"
+
+way2-> To download and rename ad the same time
+wget -O HarryPotter.txt https://raw.githubusercontent.com/bobdeng/owlreader/master/ERead/assets/books/Harry%20Potter%20and%20the%20Goblet%20of%20Fire.txt
 
 2)Display Top 3 Lines
 ->head -3 Harrypotter.txt
