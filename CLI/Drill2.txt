@@ -29,7 +29,8 @@ wc -l → Counts the number of lines in the output (each match appears on a sepa
 
 
 6)Unique Word Count
-->tr -cs '[:alpha:]' '\n' < Harrypotter.txt | sort | uniq-i | wc -l
+way1->tr -cs '[:alpha:]' '\n' < Harrypotter.txt | sort | uniq-i | wc -l
+way2->grep -oE '\b[[:alpha:]]+b\' HarryPotter.txt | sort | uniq -i | wc -l
    a)tr -cs '[:alpha:]' '\n'	
     -c: Matches everything except letters.
     -s: Squeezes multiple non-alphabetic characters into one.
