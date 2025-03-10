@@ -5,14 +5,14 @@ Main Task
 command->git status
 o/p:On branch master
 nothing to commit, working tree clean
--------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
 2.Use the branch command to create a new branch.
 command->git branch branch1
--------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
 3.Use the checkout command to switch to it.
 command->git checkout branch1
 o/p:Switched to branch 'branch1'
--------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
 4.Make a couple of commits in the branch – perhaps adding a new file and/or editing existingones.
 command->touch file1.xt
        ->git add .
@@ -21,7 +21,7 @@ command->touch file1.xt
         File1
        ->git add .
        ->git commit -m "added file1"
--------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
 5. Use the log command to see the latest commits. The two you just made should be at thetop of the list.
 command->git log
 o/p:
@@ -42,7 +42,7 @@ Author: Mohammed tahir <mohammedtahir512@gmail.com>
 Date:   Mon Mar 10 15:32:14 2025 +0530
 
     renamed
--------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
 6. Use the checkout command to switch back to the master branch. Run log again. Notice your commits don’t show up now. 
 Check the files also – they should have their originalcontents.
 command->git checkout master
@@ -77,7 +77,7 @@ command-> git checkout master
         ->git merge branch1
         ->git log
         ->gitk
--------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
 9. Switch back to your branch. Make a couple more commits.
 command->git mv file.txt file2.txt
         ->git commit -m "renamed file to file2"
@@ -92,12 +92,12 @@ command->git checkout master
         File3
         ->git add .
         ->git commit -m "edited file3 from master"
- -------------------------------------------------------------------------------------------------------------------------------------
+ ------------------------------------------------------------------------------------------------------------------------------------
 11. Now merge your branch again. (Aside: you don’t need to do anything to inform Git that you
 only want to merge things added since your previous merge. Due to the way Git works, that kind of issue simply does not come up, 
 unlike in early versions of Subversion.)
 command->git merge branch1
--------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
 12. Look at git log. Notice that there is a merge commit. Also look in gitk. Notice the DAG
 now shows how things forked, and then were joined up again by a merge commit.  
 command->git log
@@ -110,4 +110,63 @@ Date:   Mon Mar 10 16:51:44 2025 +0530
 
     Merge branch 'branch1'
 command->
--------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+
+Stretch Task
+1. Once again, checkout your branch. Make a couple of commits.
+command->git rm file2.txt
+       ->git commit -m "deleted file2"
+       ->git rm file3.txt
+       ->git commit -m "deleted file2"       
+       ->git cat >file1.txt
+       File1
+       ->git add .
+       ->git commit -m "edited file1"
+------------------------------------------------------------------------------------------------------------------------------------
+2. Return to your master branch. Make a commit there that changes the exact same line, or
+lines, as commits in your branch did.
+command->git checkout master
+       ->cat >>file1.txt
+       . editing from master branch
+       ->git add .
+       ->git commit -m "edited from master"
+------------------------------------------------------------------------------------------------------------------------------------
+3. Now try to merge your branch. You should get a conflict.
+command->git merge branch1       
+o/p:
+Auto-merging src/file1.txt
+CONFLICT (content): Merge conflict in src/file1.txt
+CONFLICT (modify/delete): src/file3.txt deleted in branch1 and modified in HEAD.  Version HEAD of src/file3.txt left in tree.
+Automatic merge failed; fix conflicts and then commit the result.
+------------------------------------------------------------------------------------------------------------------------------------
+4. Open the file(s) that is in conflict. Search for the conflict marker. Edit the file to remove the
+conflict markers and resolve the conflict.
+-> opened the conflicted file and edited
+-> git add .
+------------------------------------------------------------------------------------------------------------------------------------
+5. Now try to commit. Notice that Git will not allow you to do this when you still have
+potentially unresolved conflicts. Look at the output of status too.
+command-> git commit -m "conflict"
+o/p:
+U	src/file1.txt
+U	src/file3.txt
+error: Committing is not possible because you have unmerged files.
+hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+hint: as appropriate to mark resolution and make a commit.
+fatal: Exiting because of an unresolved conflict.
+------------------------------------------------------------------------------------------------------------------------------------
+6. Use the add command to add the files that you have resolved conflicts in to the staging area. Then use commit to commit the merge commit.
+command->git add .
+       ->git commit -m "conflict resolved"
+------------------------------------------------------------------------------------------------------------------------------------
+7. Take a look at git log and gitk, and make sure things are as you expected.
+command->git log -1
+o/p:
+commit bdbfc73dba1ffe063cdf80007b0b70769920aaf3 (HEAD -> master)
+Merge: 96dc02c 6abcf2e
+Author: Mohammed tahir <mohammedtahir512@gmail.com>
+Date:   Mon Mar 10 17:19:45 2025 +0530
+
+    conflict resolved
+command->gitk
+------------------------------------------------------------------------------------------------------------------------------------
