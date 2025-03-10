@@ -195,3 +195,104 @@ command-> touch file3.txt
        ->git add .
        ->git commit -m "added extra file"
        -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Stretch Task
+1. Use the Git rm command to remove a file. Look at the status afterwards. Now commit the
+deletion.
+command->rm file2.txt
+o/p:
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	deleted:    file2.txt
+
+
+command->git commit -m"deleted file2"
+o/p:
+[master 0dfd6a2] deleted file2
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ delete mode 100644 src/file2.txt
+------------------------------------------------------------------------------------------------------------------------------------
+
+2. Delete another file, but this time do not use Git to do it; e.g. if you are on Linux, just use the
+normal (non-Git) rm command; on Windows use del.
+command->rm file3.txt
+------------------------------------------------------------------------------------------------------------------------------------
+
+3. Look at the status. Compare it to the status output you had after using the Git built-in rm
+command. Is anything different? After this, commit the deletion.
+answer-> the difference is, if we are usinglocal rm, it asks to add and commit, where as using git rm it only asks to commit
+command-> git commit -m "deleted file1. src is now empty"
+------------------------------------------------------------------------------------------------------------------------------------
+4. Use the Git mv command to move or rename a file; for example, rename README to
+README.txt. Look at the status. Commit the change.
+
+command->git status
+o/p:
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	renamed:    README -> README.txt
+------------------------------------------------------------------------------------------------------------------------------------
+5. Now do another rename, but this time using the operating system’s command to do so. How
+does the status look? Will you get the right outcome if you were to commit at this point?
+(Answer: almost certainly not, so don’t. ) Work out how to get the status to show that it
+will not lose the file, and then commit. Did Git at any point work out that you had done a
+rename?
+command->mv README.txt README
+	->git status
+o/p:
+On branch master
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	deleted:    README
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	README.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+solution-> use git add -A(to log rename) not git add .
+------------------------------------------------------------------------------------------------------------------------------------
+6. Use git help log to find out how to get Git to display just the most recent 3 commits. Try
+it.
+command-> git show -3
+------------------------------------------------------------------------------------------------------------------------------------
+7. If you don’t remember, look back in the slides to see what the --stat option did on the
+diff command. Find out if this also works with the show command. How about the log
+command?
+answer-> git diff --stat : Shows line-level change stats for unstaged changes.
+	git show --stat : Shows change stats for a specific commit.
+	git log --stat : Shows change stats for commits in the log.
+------------------------------------------------------------------------------------------------------------------------------------
+8. Imagine you want to see a diff that summarizes all that happened between two commit
+identifiers. Use the diff command, specifying two commit identifiers joined by two dots
+(that is, something like abc123..def456). Check the output is what you expect.
+
+syntax-> git diff commit1..commit2
+command->git diff 00ca229eae7bc..f42a936ad5
+o/p:diff --git a/src/file1.txt b/src/file1.txt
+new file mode 100644
+index 0000000..9a6a6a2
+--- /dev/null
++++ b/src/file1.txt
+@@ -0,0 +1,5 @@
++Hi Tahir
++, How are you?
++What's up
++
++change 2 done
+diff --git a/src/file2.txt b/src/file2.txt
+new file mode 100644
+index 0000000..899fb16
+--- /dev/null
++++ b/src/file2.txt
+@@ -0,0 +1 @@
++Hello Tahir
+\ No newline at end of file
+diff --git a/src/README b/src/file3.txt
+similarity index 100%
+rename from src/README
+rename to src/file3.txt
+------------------------------------------------------------------------------------------------------------------------------------
