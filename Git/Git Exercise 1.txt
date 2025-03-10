@@ -1,0 +1,197 @@
+Git Exercise 1
+
+Main Task
+1.Create a new directory and change into it.
+ans->mkdir GitExercise1
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2.Use the init command to create a Git repository in that directory.
+ans-> git init
+o/p:Initialized empty Git repository in /home/mohammed/Desktop/GitExercise1/.git/
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3.Observe that there is now a .git directory.
+ans->ls -a
+o/p: .  ..  .git
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+4.Create a README file.
+ans->touch README.md
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+5.Look at the output of the status command; the README you created should appear as an
+untracked file.
+ans->git status
+o/p:
+On branch master
+No commits yet
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	README.md
+
+nothing added to commit but untracked files present (use "git add" to track)
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+6. Use the add command to add the new file to the staging area. Again, look at the output of
+the status command.
+ans-> git add .	 
+   ->git status	
+   o/p:
+On branch master
+No commits yet
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+	new file:   README.md
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+7. Now use the commit command to commit the contents of the staging area.
+ans-> git commit -m "added readme"
+o/p:
+[master (root-commit) 4bc006e] added readme
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 README.md
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+8. Create a src directory and add a couple of files to it.
+ans->mkdir src
+   ->cd src
+   ->touch file1.txt file2.txt
+   ->git add .
+   -> git status
+o/p:
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   file1.txt
+	new file:   file2.txt
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+9. Use the add command, but name the directory, not the individual files. Use the status command. See how both files have been staged. Commit them.
+command-> git add src
+o/p: 
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   src/file1.txt
+	new file:   src/file2.txt
+	
+command->git commit -m "added src dir"
+o/p:
+[master 9c8fe93] added src dir
+ 2 files changed, 2 insertions(+)
+ create mode 100644 src/file1.txt
+ create mode 100644 src/file2.txt
+mohammed@mohammed-Lenovo-ideapad-33
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+10. Make a change to one of the files. Use the diff command to view the details of the change.
+command->cat >> file1.txt
+, How are you?
+command-> git diff
+o/p:
+diff --git a/src/file1.txt b/src/file1.txt
+index 4f04edb..fa52400 100644
+--- a/src/file1.txt
++++ b/src/file1.txt
+@@ -1 +1,2 @@
+ Hi Tahir
++, How are you?
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+11. Next, add the changed file, and notice how it moves to the staging area in the status output. Also observe that the diff command you did before using add now gives no output.
+Why not? What do you have to do to see a diff of the things in the staging area? (Hint:
+review the slides if you can’t remember.)
+command-> git add.
+command-> git status
+o/p: 
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   file1.txt
+command-> git diff
+o/p:      (no output)
+command->git diff --staged
+o/p:
+diff --git a/src/file1.txt b/src/file1.txt
+index 4f04edb..fa52400 100644
+--- a/src/file1.txt
++++ b/src/file1.txt
+@@ -1 +1,2 @@
+ Hi Tahir
++, How are you?
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+12. Now – without committing – make another change to the same file you changed in step 10.
+Look at the status output, and the diff output. Notice how you can have both staged and
+unstaged changes, even when you’re talking about a single file. Observe the difference when
+you use the add command to stage the latest round of changes. Finally, commit them. You
+should now have started to get a feel for the staging area.
+command->git status
+o/p:
+n branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   file1.txt
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   file1.txt
+
+command->git diff
+o/p:
+diff --git a/src/file1.txt b/src/file1.txt
+index 744820e..9a6a6a2 100644
+--- a/src/file1.txt
++++ b/src/file1.txt
+@@ -1,3 +1,5 @@
+ Hi Tahir
+ , How are you?
++What's up
+
+command-> git commit -m "change 2"
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+13. Use the log command in order to see all of the commits you made so far.
+command->git log
+o/p:
+Author: Mohammed tahir <mohammedtahir512@gmail.com>
+Date:   Mon Mar 10 14:07:04 2025 +0530
+
+    change 2
+
+commit fdcae09ff50e8f9065cf21802ee855d36141b088
+Author: Mohammed tahir <mohammedtahir512@gmail.com>
+Date:   Mon Mar 10 13:27:38 2025 +0530
+
+    edited file1.txt
+
+commit 9c8fe93b3d30445f03fc0db4f1a446cc7b5d51f5
+Author: Mohammed tahir <mohammedtahir512@gmail.com>
+Date:   Mon Mar 10 13:03:26 2025 +0530
+
+    added src dir
+
+commit 4bc006ecc2617991c99ec3a53f54b60005faea58
+Author: Mohammed tahir <mohammedtahir512@gmail.com>
+Date:   Mon Mar 10 12:53:34 2025 +0530
+
+    added readme
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+14. Use the show command to look at an individual commit. How many characters of the
+commit identifier can you get away with typing at a minimum?
+command->git show
+o/p:
+git show
+commit 1e67240a2bccc4b60d33876905ad3a995e55d125 (HEAD -> master)
+Author: Mohammed tahir <mohammedtahir512@gmail.com>
+Date:   Mon Mar 10 14:07:04 2025 +0530
+
+    change 2
+
+diff --git a/src/file1.txt b/src/file1.txt
+index fa52400..9a6a6a2 100644
+--- a/src/file1.txt
++++ b/src/file1.txt
+@@ -1,2 +1,5 @@
+ Hi Tahir
+ , How are you?
++What's up
++
++change 2 done
+
+->4 characters of commit hashcode  is enough to get an individual commit. But for larger repositories, minimum characters is 7.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+15. Make a couple more commits, at least one of which should add an extra file.
+command-> touch file3.txt
+       ->git add .
+       ->git commit -m "added extra file"
+       -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
