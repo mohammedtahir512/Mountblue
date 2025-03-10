@@ -1,0 +1,113 @@
+Exercise 2
+Main Task
+
+1.Run the status command. Notice how it tells you what branch you are in.
+command->git status
+o/p:On branch master
+nothing to commit, working tree clean
+-------------------------------------------------------------------------------------------------------------------------------------
+2.Use the branch command to create a new branch.
+command->git branch branch1
+-------------------------------------------------------------------------------------------------------------------------------------
+3.Use the checkout command to switch to it.
+command->git checkout branch1
+o/p:Switched to branch 'branch1'
+-------------------------------------------------------------------------------------------------------------------------------------
+4.Make a couple of commits in the branch – perhaps adding a new file and/or editing existingones.
+command->touch file1.xt
+       ->git add .
+        git commit -m "added file1"
+       ->cat > file1.txt
+        File1
+       ->git add .
+       ->git commit -m "added file1"
+-------------------------------------------------------------------------------------------------------------------------------------
+5. Use the log command to see the latest commits. The two you just made should be at thetop of the list.
+command->git log
+o/p:
+commit c23297ef4ab2b21df17f49455d285486819787e0 (HEAD -> branch1)
+Author: Mohammed tahir <mohammedtahir512@gmail.com>
+Date:   Mon Mar 10 16:01:21 2025 +0530
+
+    edited file1
+
+commit f7d65a0fc63c72abf614215fe18d32dda26f5f81
+Author: Mohammed tahir <mohammedtahir512@gmail.com>
+Date:   Mon Mar 10 16:00:17 2025 +0530
+
+    added file1
+
+commit ad0b8ed9065263d3c7c0cdef2371f71a76ecd946 (master)
+Author: Mohammed tahir <mohammedtahir512@gmail.com>
+Date:   Mon Mar 10 15:32:14 2025 +0530
+
+    renamed
+-------------------------------------------------------------------------------------------------------------------------------------
+6. Use the checkout command to switch back to the master branch. Run log again. Notice your commits don’t show up now. 
+Check the files also – they should have their originalcontents.
+command->git checkout master
+o/p:Switched to branch 'master'
+
+command->git log
+o/p:
+ommit ad0b8ed9065263d3c7c0cdef2371f71a76ecd946 (HEAD -> master)
+Author: Mohammed tahir <mohammedtahir512@gmail.com>
+Date:   Mon Mar 10 15:32:14 2025 +0530
+
+    renamed
+
+commit 00ca229eae7bcc9b86555a8d90e7984641450a64
+Author: Mohammed tahir <mohammedtahir512@gmail.com>
+Date:   Mon Mar 10 15:12:20 2025 +0530
+
+    added readme
+
+commit 4386bc239c758874f32e1ab4739b03581c9327f4
+Author: Mohammed tahir <mohammedtahir512@gmail.com>
+Date:   Mon Mar 10 15:00:50 2025 +0530
+
+    deleted file1. src is now empty
+-------------------------------------------------------------------------------------------------------------------------------------
+7. Use the checkout command to switch back to your branch. Use gitk to take a look at thecommit graph; notice it’s linear.
+command-> gitk branch1
+-------------------------------------------------------------------------------------------------------------------------------------
+8. Now checkout the master branch again. Use the merge command to merge your branch in to it. Look for information about it having 
+been a fast-forward merge. Look at git log, and see that there is no merge commit. Take a look in gitk and see how the DAG is linear.
+command-> git checkout master
+        ->git merge branch1
+        ->git log
+        ->gitk
+-------------------------------------------------------------------------------------------------------------------------------------
+9. Switch back to your branch. Make a couple more commits.
+command->git mv file.txt file2.txt
+        ->git commit -m "renamed file to file2"
+        ->touch file3.txt
+        ->git add .
+        ->git commit -m "created file3"
+-------------------------------------------------------------------------------------------------------------------------------------
+10. Switch back to master. Make a commit there, which should edit a different file from theones you touched in your branch – to 
+be sure there is no conflict.
+command->git checkout master
+        ->cat > file3.txt
+        File3
+        ->git add .
+        ->git commit -m "edited file3 from master"
+ -------------------------------------------------------------------------------------------------------------------------------------
+11. Now merge your branch again. (Aside: you don’t need to do anything to inform Git that you
+only want to merge things added since your previous merge. Due to the way Git works, that kind of issue simply does not come up, 
+unlike in early versions of Subversion.)
+command->git merge branch1
+-------------------------------------------------------------------------------------------------------------------------------------
+12. Look at git log. Notice that there is a merge commit. Also look in gitk. Notice the DAG
+now shows how things forked, and then were joined up again by a merge commit.  
+command->git log
+o/p:
+git log
+commit 940f9b02c5fbf7dd1fc5cddb519044dd8019b07f (HEAD -> master)
+Merge: bb0477f c415096
+Author: Mohammed tahir <mohammedtahir512@gmail.com>
+Date:   Mon Mar 10 16:51:44 2025 +0530
+
+    Merge branch 'branch1'
+command->
+-------------------------------------------------------------------------------------------------------------------------------------
