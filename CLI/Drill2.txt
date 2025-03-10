@@ -69,7 +69,7 @@ Note:ps -ef: Lists all running processes with detailed information.
 ->ps -eo pid,ppid,%cpu --sort=-%cpu | head -4
 
 
-4)op 3 Memory-Consuming Processes
+4T)op 3 Memory-Consuming Processes
 ->ps -eo pid,ppid,%mem --sort=-%mem | head -4
 Note:-ps:Stands for Process Status — shows details about running processes.
      -e:Displays all processes (not just those associated with the current terminal).
@@ -79,20 +79,30 @@ Note:-ps:Stands for Process Status — shows details about running processes.
 ->python3 -m http.server 8000
 
 6)Stop the Python Server
-->lsof -i:8000(if it running on port-8000)
-->ps -eo pid,cmd | grep python 
-->lsof -i:8000
+way 1->lsof -i:8000(if it running on port-8000)
+way 2->ps -eo pid,cmd | grep python (if we dont know the port no.)
+     ->lsof -i:8000
 
 
 7)Python Server on Port 90
 ->sudo python3 -m http.server 90
+Note: we are using sudo here because, in Linux port 1-1023 are previlged(they require root permissions)
 
 
 8)Display all active connections and the corresponding TCP / UDP ports.
-->netstat -tuln
+way1->netstat -tuln
+way2->ss -tuln
+   Note:-netstat — Displays network-related information like connections, routing tables, etc.
+        -ss — A faster and more modern alternative to netstat for displaying socket information
+	-t — Show TCP connections.
+	-u — Show UDP connections.
+	-l — Show only listening ports (ignores established or closed connections).
+	-n — Show numeric addresses instead of resolving them to hostnames for faster output.
+	
 
 9)Find PID of Process Listening on Port 5432
 ->ss -tunlp | grep :5432
+Note:-p — Show the process name and PID associated with the socket.
 ----------------------------------------------------------------------------------------------------------------------------	
 	
 
@@ -118,7 +128,8 @@ Miscellaneous
 
 
 3) How to check if Internet is working using CLI?
-->ping google.com
+way1->ping google.com
+way->nslookup google.com
 
 4)Where is the node command located? What about code?
 ->whereis node
