@@ -25,13 +25,42 @@ edit the file
  -------------------------------------------------------------------------------------------------------------------------------------
 
 5. Create a branch. Make a commit.
+command->git branch branch2
+       ->git add .
+       ->git commit -m "created branch2"
+-------------------------------------------------------------------------------------------------------------------------------------
 6. Now switch back to your master branch. Make a (non-conflicting) commit there also.
+command->git checkout master
+       ->git commit -m "switched to master"
+-------------------------------------------------------------------------------------------------------------------------------------
 7. Now switch back to your branch.
-8. Use the rebase command in your branch. Look at the DAG in gitk, and note that you have
-the commit from the master branch, but no merge commit.
+command->it checkout branch2
+-------------------------------------------------------------------------------------------------------------------------------------
+8. Use the rebase command in your branch. Look at the DAG in gitk, and note that you have the commit from the master branch, but no merge commit.
+command->git rebase master
+       o/p:Successfully rebased and updated refs/heads/branch2.
+       
+-------------------------------------------------------------------------------------------------------------------------------------
 9. Make one more commit in your branch.
-10. Return to master. Merge your branch. Notice how, thanks to the rebase, this is a fast-
-forward merge.
+command->git commit -m  "one more commit"
+o/p:
+On branch branch2
+nothing to commit, working tree clean
+-------------------------------------------------------------------------------------------------------------------------------------
+10. Return to master. Merge your branch. Notice how, thanks to the rebase, this is a fast-forward merge.
+command-> git checkout master
+       ->git merge branch2
+A fast-forward merge-happens when the branch you’re merging into hasn’t changed since the other branch diverged. Instead of combining histories with a merge commit, Git simply moves the branch pointer forward to the latest commit on the merged branch, making the history linear and clean.
+example:
+Before Merge:
+
+A --- B --- C (main)
+          \
+            D --- E (feature)
+After Fast-Forward Merge:
+
+A --- B --- C --- D --- E (main, feature)
+-------------------------------------------------------------------------------------------------------------------------------------
 Stretch Task
 1. Find somebody from your team from the previous exercise. Have them push a commit to
 the central repository.
