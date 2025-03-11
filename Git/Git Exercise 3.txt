@@ -1,29 +1,106 @@
 Exercise 3
-For this task, you will work in a small group. Between 2 and 4 people is about right.
-Main Task
-1. First, one person in the group should create a public repository using their GitHub account.
-2. This same person should then follow the instructions from GitHub to add a remote, and
-then push their repository. Do not forget the –u flag, as suggested by GitHub!
-3. All of the other members of the group should then be added as collaborators, so they can
-commit to the repository also.
-4. Next, everyone else in the group should clone the repository from GitHub. Verify that the
-context of the repository is what is expected.
+cloning at runner's local m/c:git clone "https://github.com/mohammedtahir512/Mountblue"
 5. One of the group members who just cloned should now make a local commit, then push it.
 Everyone should verify that when they pull, that commit is added to their local repository
 (use git log to check for it).
+command->echo "File1 content" > file1.txt
+        ->git add .
+        ->git commit -m "edited file1"
+        ->git push origin main
+--------------------------------------------------------------------------------------------------------------------------
 6. Look at each other’s git log output. Notice how the SHA-1 is the same for a given commit
 across every copy of the repository. Why is this important?
+command->git pull origin main
+        ->git log
+--------------------------------------------------------------------------------------------------------------------------
 7. Two members of the group should now make a commit locally, and race to push it. To keep
 things simple, be sure to edit different files. What happens to the runner-up?
+a)No conflict
+main user command->
+echo "Content for file2" > file2.txt
+git add file2.txt
+git commit -m "added file2"
+git push origin main
+
+other user command->
+echo "Content for file3" > file3.txt
+git add file3.txt
+git commit -m "added file3"
+git push origin main
+b)conflict
+main user command->
+echo "Content for file4 - Member 1" > file4.txt
+git add file4.txt
+git commit -m "file4 content by Member 1"
+git push origin main
+other user command->
+echo "Content for file4 - Member 2" > file4.txt
+git add file4.txt
+git commit -m "file4 content by Member 2"
+git push origin main
+o/p:
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. You may want to first integrate the remote changes (e.g., 'git pull')
+
+--------------------------------------------------------------------------------------------------------------------------
 8. The runner-up should now pull. As a group, look at the output of the command.
 Additionally, look at the git log, and notice that there is a merge commit. You may also
 wish to view the DAG in gitk.
-9. Repeat the last two steps a couple of times, to practice.
+command->git pull origin main
+      ->git add file4.txt
+      ->git commit
+      ->git push origin main
+      ->git log
+      ->gitk
+--------------------------------------------------------------------------------------------------------------------------
 Stretch Task
+
 1. Now create a situation where two group members both edit the same line in the same file
 and commit it locally. Race to push.
+command->cat one.txt
+o/p:File to edit
+command->git add .
+        ->gti commit -m "edited one.txt"
+        ->git push
+--------------------------------------------------------------------------------------------------------------------------        
 2. When the runner-up does a pull, they should get a merge conflict.
+ans-> yes
+--------------------------------------------------------------------------------------------------------------------------
 3. Look as a group at the file in conflict, and resolve it.
+ans->runner got conflict-> resolved the conflict -> pushed the merge commit
+--------------------------------------------------------------------------------------------------------------------------
 4. Use the add command to stage the fix, and then use commit to make the merge commit.
 Notice how this procedure is exactly the one you got used to when resolving conflicts in
-branches.     
+branches. 
+command->git log -1
+         o/p:
+            commit 934a606ce544960d5891b6fea00da02d604e282c (HEAD -> main, origin/main)
+            Author: Mohammed tahir <mohammedtahir512@gmail.com>
+            Date:   Tue Mar 11 11:14:38 2025 +0530
+            
+                edited one.txt
+>git pull
+->cat one.txt
+o/p:Hello World!
+    File to edit
+->git log -3
+o/p:
+commit 0d4385e9297a1029ab17b099b785861d9082d390 (HEAD -> main, origin/main)
+Merge: e690df3 934a606
+Author: Anjishnu Laskar <anjishnu.laskar@gmail.com>
+Date:   Tue Mar 11 11:16:15 2025 +0530
+
+    Merge branch 'main' of https://github.com/mohammedtahir512/Mountblue
+
+commit 934a606ce544960d5891b6fea00da02d604e282c
+Author: Mohammed tahir <mohammedtahir512@gmail.com>
+Date:   Tue Mar 11 11:14:38 2025 +0530
+
+    edited one.txt
+
+commit e690df3b63cb73dad35ae3e245dba787d6187e0d
+Author: Anjishnu Laskar <anjishnu.laskar@gmail.com>
+Date:   Tue Mar 11 11:14:25 2025 +0530
+
+    Edited one.txt
